@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "SL Traffic Fine Pay",
+    "slug": "sl-traffic-fine-pay",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#003580"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.slpolice.trafficfinepay"
+    },
+    "android": {
+      "package": "com.slpolice.trafficfinepay",
+      "adaptiveIcon": {
+        "backgroundColor": "#003580"
+      }
+    },
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}
