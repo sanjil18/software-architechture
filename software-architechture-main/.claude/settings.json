@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s -m 5 http://localhost:5000/api/auth/login -X POST -H \"Content-Type: application/json\" -d '{\"email\":\"admin@police.lk\",\"password\":\"admin123\"}')"
+    ]
+  }
+}
