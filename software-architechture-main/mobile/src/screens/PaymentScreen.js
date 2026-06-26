@@ -59,6 +59,7 @@ export default function PaymentScreen({ route, navigation }) {
         referenceNumber: paidFine.referenceNumber || referenceNumber,
         amountPaid: paidFine.amount || amount,
         paymentReference: paidFine.paymentReference || paymentReference,
+        driverSmsSent: paidFine.driverSmsSent,
       });
     } catch (error) {
       const serverMessage = error.response?.data?.message;

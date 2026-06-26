@@ -135,9 +135,28 @@ export default function PaymentPage() {
           {step === 2 && fineData && (
             <div className="card">
               <h1 className="card-title">📋 Review Fine Details</h1>
-              <p className="card-subtitle">Please verify the details before proceeding to payment.</p>
+              <p className="card-subtitle">
+                {fineData.status === 'paid'
+                  ? 'This fine has already been paid in full.'
+                  : fineData.status === 'cancelled'
+                  ? 'This fine has been cancelled and cannot be paid.'
+                  : 'Please verify the details before proceeding to payment.'}
+              </p>
 
-              {isOverdue && (
+              {fineData.status === 'paid' && (
+                <div className="warning-box" style={{ background: '#dcfce7', color: '#166534', borderColor: '#bbf7d0' }}>
+                  ✅ Paid on {new Date(fineData.paidAt).toLocaleString('en-LK')}
+                  {fineData.paymentReference && ` — Ref: ${fineData.paymentReference}`}
+                </div>
+              )}
+
+              {fineData.status === 'cancelled' && (
+                <div className="warning-box">
+                  ❌ This fine was cancelled by the issuing department.
+                </div>
+              )}
+
+              {isOverdue && fineData.status === 'pending' && (
                 <div className="warning-box">
                   ⚠️ This fine is overdue since {new Date(fineData.dueDate).toLocaleDateString('en-LK')}. Please pay immediately.
                 </div>
@@ -163,6 +182,7 @@ export default function PaymentPage() {
                   ['District', fineData.district],
                   ['Issued On', new Date(fineData.issuedAt).toLocaleDateString('en-LK')],
                   ['Due Date', new Date(fineData.dueDate).toLocaleDateString('en-LK')],
+                  ['Status', fineData.status?.toUpperCase()],
                 ].map(([label, value]) => (
                   <div className="fine-row" key={label}>
                     <span className="fine-row-label">{label}</span>
@@ -171,11 +191,13 @@ export default function PaymentPage() {
                 ))}
               </div>
 
-              <button className="btn btn-primary" onClick={() => setStep(3)}>
-                ✅ Confirm & Proceed to Payment
-              </button>
+              {fineData.status !== 'paid' && fineData.status !== 'cancelled' && (
+                <button className="btn btn-primary" onClick={() => setStep(3)}>
+                  ✅ Confirm & Proceed to Payment
+                </button>
+              )}
               <button className="btn btn-secondary" onClick={() => { setStep(1); setFineData(null); }}>
-                ← Go Back
+                ← Look Up Another Fine
               </button>
             </div>
           )}

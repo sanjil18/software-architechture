@@ -12,7 +12,7 @@ import { formatCurrency } from '../utils/formatters';
  * user can't navigate back into a completed payment flow.
  */
 export default function SuccessScreen({ route, navigation }) {
-  const { referenceNumber, amountPaid, paymentReference } = route.params;
+  const { referenceNumber, amountPaid, paymentReference, driverSmsSent } = route.params;
 
   const handleDone = () => {
     navigation.dispatch(
@@ -33,6 +33,7 @@ export default function SuccessScreen({ route, navigation }) {
         <Text style={styles.heading}>Payment Successful!</Text>
         <Text style={styles.subheading}>
           Your traffic fine has been paid. Show this confirmation to retrieve your license.
+          {driverSmsSent ? ' A confirmation SMS has also been sent to your mobile number.' : ''}
         </Text>
 
         <View style={styles.receiptBox}>

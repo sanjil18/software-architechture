@@ -119,6 +119,9 @@ export default function IssueFinePage() {
               ['District', submitted.district],
               ['Due Date', new Date(submitted.dueDate).toLocaleDateString('en-LK')],
               ['Status', submitted.status?.toUpperCase()],
+              ...(submitted.driverPhone
+                ? [['Driver SMS', submitted.issuedSmsSent ? `✅ Sent to ${submitted.driverPhone}` : '⚠️ Not sent']]
+                : [['Driver SMS', '— No phone number on file']]),
             ].map(([label, value]) => (
               <div className="issue-receipt-row" key={label}>
                 <span className="issue-receipt-label">{label}</span>

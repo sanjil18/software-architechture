@@ -48,6 +48,10 @@ const trafficFineSchema = new mongoose.Schema(
       enum: ['car', 'motorcycle', 'bus', 'truck', 'three-wheeler', 'other'],
       default: 'car',
     },
+    driverPhone: {
+      type: String,
+      default: null,
+    },
     // Fine details
     amount: {
       type: Number,
@@ -92,7 +96,18 @@ const trafficFineSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
-    smsSent: {
+    // Driver notified by SMS when the fine was first issued
+    issuedSmsSent: {
+      type: Boolean,
+      default: false,
+    },
+    // Officer notified by SMS that payment was received
+    officerSmsSent: {
+      type: Boolean,
+      default: false,
+    },
+    // Driver notified by SMS that their payment was received
+    driverSmsSent: {
       type: Boolean,
       default: false,
     },

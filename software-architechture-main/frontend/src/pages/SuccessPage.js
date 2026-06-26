@@ -29,7 +29,8 @@ export default function SuccessPage() {
         </p>
 
         <div className="sms-notice">
-          📱 An SMS notification has been sent to the traffic officer. Please show this receipt to retrieve your license.
+          📱 An SMS notification has been sent to the traffic officer
+          {receipt.driverSmsSent ? ' and to your mobile number' : ''}. Please show this receipt to retrieve your license.
         </div>
 
         <div className="receipt-box">

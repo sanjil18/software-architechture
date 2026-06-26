@@ -36,7 +36,13 @@ export default function FineCard({ fine }) {
       <Row label="Location" value={fine.location} />
       <Row label="District" value={fine.district} />
       <Row label="Date Issued" value={formatDate(fine.issuedAt)} />
-      <Row label="Due Date" value={formatDate(fine.dueDate)} last />
+      <Row label="Due Date" value={formatDate(fine.dueDate)} last={fine.status !== 'paid'} />
+      {fine.status === 'paid' && (
+        <>
+          <Row label="Paid On" value={formatDate(fine.paidAt)} />
+          <Row label="Payment Ref." value={fine.paymentReference} last />
+        </>
+      )}
     </View>
   );
 }

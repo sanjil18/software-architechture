@@ -1,7 +1,11 @@
 const { v4: uuidv4 } = require('uuid');
 const TrafficFine = require('../models/TrafficFine');
 const FineCategory = require('../models/FineCategory');
-const { sendPaymentConfirmationSMS } = require('../services/smsService');
+const {
+  sendFineIssuedSMS,
+  sendPaymentConfirmationSMS,
+  sendDriverPaymentConfirmationSMS,
+} = require('../services/smsService');
 
 // Generate unique reference number
 const generateReferenceNumber = () => {
@@ -19,6 +23,7 @@ const issueFine = async (req, res, next) => {
       categoryId,
       driverName,
       driverLicense,
+      driverPhone,
       vehicleNumber,
       vehicleType,
       location,
@@ -50,6 +55,7 @@ const issueFine = async (req, res, next) => {
       officerPhone: req.user.phone,
       driverName,
       driverLicense,
+      driverPhone: driverPhone || null,
       vehicleNumber,
       vehicleType,
       amount: category.amount,
@@ -60,6 +66,21 @@ const issueFine = async (req, res, next) => {
     });
 
     await fine.populate('category', 'name description amount');
+
+    // Notify the driver by SMS that a fine has been issued against them
+    if (fine.driverPhone) {
+      const smsResult = await sendFineIssuedSMS(fine.driverPhone, {
+        referenceNumber: fine.referenceNumber,
+        violation: fine.violation,
+        vehicleNumber: fine.vehicleNumber,
+        amount: fine.amount,
+        location: fine.location,
+        dueDate: fine.dueDate,
+        categoryId: fine.categoryId,
+      });
+      fine.issuedSmsSent = smsResult.success;
+      await fine.save();
+    }
 
     res.status(201).json({
       success: true,
@@ -129,19 +150,9 @@ const lookupFine = async (req, res, next) => {
       });
     }
 
-    if (fine.status === 'paid') {
-      return res.status(400).json({
-        success: false,
-        message: 'This fine has already been paid.',
-        fine: {
-          referenceNumber: fine.referenceNumber,
-          status: fine.status,
-          paidAt: fine.paidAt,
-        },
-      });
-    }
-
-    // Return fine details (hide sensitive officer info)
+    // Return fine details (hide sensitive officer info). Paid/cancelled
+    // fines are still returned (with payment info) so a driver can always
+    // look up a fine and see it as completed, instead of getting a "not found".
     res.status(200).json({
       success: true,
       fine: {
@@ -160,6 +171,9 @@ const lookupFine = async (req, res, next) => {
         status: fine.status,
         issuedAt: fine.issuedAt,
         dueDate: fine.dueDate,
+        paymentMethod: fine.paymentMethod,
+        paymentReference: fine.paymentReference,
+        paidAt: fine.paidAt,
       },
     });
   } catch (error) {
@@ -208,27 +222,38 @@ const payFine = async (req, res, next) => {
     await fine.populate('category', 'name description amount');
 
     // Send SMS to officer
-    const smsResult = await sendPaymentConfirmationSMS(fine.officerPhone, {
+    const officerSmsResult = await sendPaymentConfirmationSMS(fine.officerPhone, {
       referenceNumber: fine.referenceNumber,
       driverName: fine.driverName,
       vehicleNumber: fine.vehicleNumber,
       amount: fine.amount,
       paidAt: fine.paidAt,
     });
+    fine.officerSmsSent = officerSmsResult.success;
 
-    fine.smsSent = smsResult.success;
+    // Send SMS to driver, if we have a number on file
+    if (fine.driverPhone) {
+      const driverSmsResult = await sendDriverPaymentConfirmationSMS(fine.driverPhone, {
+        referenceNumber: fine.referenceNumber,
+        amount: fine.amount,
+        paidAt: fine.paidAt,
+      });
+      fine.driverSmsSent = driverSmsResult.success;
+    }
+
     await fine.save();
 
     res.status(200).json({
       success: true,
-      message: 'Fine paid successfully. SMS notification sent to officer.',
+      message: 'Fine paid successfully. SMS notification sent.',
       fine: {
         referenceNumber: fine.referenceNumber,
         amount: fine.amount,
         status: fine.status,
         paymentReference: fine.paymentReference,
         paidAt: fine.paidAt,
-        smsSent: fine.smsSent,
+        officerSmsSent: fine.officerSmsSent,
+        driverSmsSent: fine.driverSmsSent,
       },
     });
   } catch (error) {
