@@ -6,7 +6,7 @@ spring:
     name: traffic-fine-system
   data:
     mongodb:
-      uri: ${MONGODB_URI:mongodb://localhost:27017/traffic_fine_system}
+      uri: ${MONGODB_URI:mongodb+srv://sanjilraj2_db_user:EJj23DzngVtpOq8y@cluster0.yspoddj.mongodb.net/traffic_fines?appName=Cluster0}
   jackson:
     default-property-inclusion: non_null
 
@@ -20,7 +20,7 @@ app:
     window-minutes: 15
     max-requests: 100
   seed:
-    enabled: ${SEED_ON_STARTUP:false}
+    enabled: ${SEED_ON_STARTUP:true}
   frontend:
     build-path: ${FRONTEND_BUILD_PATH:../frontend/build}
   sms:
