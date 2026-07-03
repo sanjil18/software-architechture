@@ -11,7 +11,7 @@ import { COLORS } from '../config/constants';
  */
 export default function FineDetailScreen({ route, navigation }) {
   const { fine } = route.params;
-  const isPayable = fine.status !== 'paid' && fine.status !== 'cancelled';
+  const isPayable = fine.status !== 'PAID' && fine.status !== 'CANCELLED';
 
   const handlePayNow = () => {
     navigation.navigate('Payment', { fineId: fine.id, amount: fine.amount, referenceNumber: fine.referenceNumber });

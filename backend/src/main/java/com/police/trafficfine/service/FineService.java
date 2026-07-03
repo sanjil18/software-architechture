@@ -72,9 +72,8 @@ public class FineService {
 
         if (fine.getDriverPhone() != null && !fine.getDriverPhone().isBlank()) {
             SmsService.SmsResult result = smsService.sendFineIssuedSms(
-                    fine.getDriverPhone(), fine.getReferenceNumber(), fine.getViolation(),
-                    fine.getVehicleNumber(), fine.getAmount(), fine.getLocation(),
-                    fine.getDueDate(), fine.getCategoryId());
+                    fine.getDriverPhone(), fine.getReferenceNumber(),
+                    category.getName(), fine.getCategoryId(), fine.getAmount());
             fine.setIssuedSmsSent(result.success());
             fine = fineRepository.save(fine);
         }
@@ -151,9 +150,16 @@ public class FineService {
                 fine.getVehicleNumber(), fine.getAmount(), fine.getPaidAt());
         fine.setOfficerSmsSent(officerSms.success());
 
-        if (fine.getDriverPhone() != null && !fine.getDriverPhone().isBlank()) {
+        // Use the phone stored on the fine; fall back to the number the driver
+        // provided during payment (handles fines issued without a driverPhone).
+        String smsPhone = (fine.getDriverPhone() != null && !fine.getDriverPhone().isBlank())
+                ? fine.getDriverPhone()
+                : request.getNotifyPhone();
+
+        if (smsPhone != null && !smsPhone.isBlank()) {
             SmsService.SmsResult driverSms = smsService.sendDriverPaymentConfirmationSms(
-                    fine.getDriverPhone(), fine.getReferenceNumber(), fine.getAmount(), fine.getPaidAt());
+                    smsPhone, fine.getReferenceNumber(),
+                    fine.getAmount(), fine.getPaymentReference());
             fine.setDriverSmsSent(driverSms.success());
         }
 

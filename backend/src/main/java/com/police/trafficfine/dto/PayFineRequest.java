@@ -7,4 +7,6 @@ import lombok.Data;
 public class PayFineRequest {
     private PaymentMethod paymentMethod;
     private String paymentReference;
+    /** Driver's phone for SMS confirmation. Used if no phone was recorded on the fine. */
+    private String notifyPhone;
 }

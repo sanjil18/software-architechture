@@ -6,7 +6,7 @@ spring:
     name: traffic-fine-system
   data:
     mongodb:
-      uri: ${MONGODB_URI:mongodb://localhost:27017/traffic_fine_system}
+      uri: ${MONGODB_URI:mongodb+srv://sanjilraj2_db_user:EJj23DzngVtpOq8y@cluster0.yspoddj.mongodb.net/traffic_fines?appName=Cluster0}
   jackson:
     default-property-inclusion: non_null
 
@@ -20,14 +20,14 @@ app:
     window-minutes: 15
     max-requests: 100
   seed:
-    enabled: ${SEED_ON_STARTUP:false}
+    enabled: ${SEED_ON_STARTUP:true}
   frontend:
     build-path: ${FRONTEND_BUILD_PATH:../frontend/build}
   sms:
-    twilio:
-      account-sid: ${TWILIO_ACCOUNT_SID:}
-      auth-token: ${TWILIO_AUTH_TOKEN:}
-      phone-number: ${TWILIO_PHONE_NUMBER:}
+    notifylk:
+      user-id: ${NOTIFYLK_USER_ID:32234}
+      api-key: ${NOTIFYLK_API_KEY:meT29d0ewxHKXixWaTTK}
+      sender-id: ${NOTIFYLK_SENDER_ID:NotifyDEMO}
 
 logging:
   level:
