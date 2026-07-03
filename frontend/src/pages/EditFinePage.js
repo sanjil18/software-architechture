@@ -7,7 +7,7 @@ const DISTRICTS = ['Colombo','Gampaha','Kalutara','Kandy','Matale','Nuwara Eliya
   'Galle','Matara','Hambantota','Jaffna','Kilinochchi','Mannar','Vavuniya','Mullaitivu',
   'Batticaloa','Ampara','Trincomalee','Kurunegala','Puttalam','Anuradhapura','Polonnaruwa',
   'Badulla','Monaragala','Ratnapura','Kegalle'];
-const VEHICLE_TYPES = ['car','motorcycle','bus','truck','three-wheeler','other'];
+const VEHICLE_TYPES = ['CAR','MOTORCYCLE','BUS','TRUCK','THREE_WHEELER','OTHER'];
 const STATUS_OPTIONS = ['pending','overdue','cancelled'];
 
 export default function EditFinePage() {
@@ -22,7 +22,7 @@ export default function EditFinePage() {
   useEffect(() => {
     Promise.all([getAllFines({ limit:1000 }), getCategories()])
     .then(([finesRes, catRes]) => {
-      const fine = finesRes.fines.find(f => f._id === id);
+     const fine = finesRes.fines.find(f => f.id === id);
       if (!fine) { toast.error('Fine not found.'); navigate('/admin/fines'); return; }
       setOriginal(fine);
       setForm({
@@ -118,8 +118,7 @@ export default function EditFinePage() {
               <label>Vehicle Type <span className="req">*</span></label>
               <select name="vehicleType" value={form.vehicleType} onChange={handleChange}>
                 <option value="">Select type...</option>
-                {VEHICLE_TYPES.map(t => <option key={t} value={t}>{t.charAt(0).toUpperCase()+t.slice(1).replace('-',' ')}</option>)}
-              </select>
+              {VEHICLE_TYPES.map(t => <option key={t} value={t}>{t.charAt(0)+t.slice(1).toLowerCase().replace('_',' ')}</option>)}              </select>
             </div>
           </div>
         </div>

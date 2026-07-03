@@ -48,7 +48,7 @@ export default function PaymentPage() {
     }
     setLoading(true);
     try {
-      const result = await payFine(fineData.id, { paymentMethod: 'online' });
+      const result = await payFine(fineData.id, { paymentMethod: 'ONLINE' });
       navigate('/success', { state: { receipt: result.fine } });
     } catch (err) {
       toast.error(err.response?.data?.message || 'Payment failed. Please try again.');

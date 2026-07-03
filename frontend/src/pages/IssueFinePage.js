@@ -11,7 +11,7 @@ const DISTRICTS = [
   'Monaragala','Ratnapura','Kegalle',
 ];
 
-const VEHICLE_TYPES = ['car','motorcycle','bus','truck','three-wheeler','other'];
+const VEHICLE_TYPES = ['CAR','MOTORCYCLE','BUS','TRUCK','THREE_WHEELER','OTHER'];
 
 export default function IssueFinePage() {
   const navigate = useNavigate();
@@ -208,7 +208,7 @@ export default function IssueFinePage() {
                 <option value="">Select type...</option>
                 {VEHICLE_TYPES.map((t) => (
                   <option key={t} value={t}>
-                    {t.charAt(0).toUpperCase() + t.slice(1).replace('-', ' ')}
+                    {t.charAt(0) + t.slice(1).toLowerCase().replace('_', ' ')}
                   </option>
                 ))}
               </select>

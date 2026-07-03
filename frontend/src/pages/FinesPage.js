@@ -109,7 +109,7 @@ export default function FinesPage() {
                 </tr>
               ) : (
                 fines.map((fine) => (
-                  <tr key={fine._id}>
+                  <tr key={fine.id}>
                     <td className="mono" style={{ color: 'var(--primary)' }}>{fine.referenceNumber}</td>
                     <td>
                       <div style={{ fontWeight: 500 }}>{fine.driverName}</div>
@@ -140,7 +140,7 @@ export default function FinesPage() {
                       {fine.status !== 'paid' && fine.status !== 'cancelled' ? (
                         <button
                           className="edit-btn"
-                          onClick={() => navigate(`/admin/edit-fine/${fine._id}`)}
+                          onClick={() => navigate(`/admin/edit-fine/${fine.id}`)}
                         >
                           ✏️ Edit
                         </button>
