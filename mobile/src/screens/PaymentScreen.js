@@ -26,6 +26,7 @@ export default function PaymentScreen({ route, navigation }) {
   const [cardNumber, setCardNumber] = useState('');
   const [expiry, setExpiry] = useState('');
   const [cvv, setCvv] = useState('');
+  const [notifyPhone, setNotifyPhone] = useState('');
   const [paying, setPaying] = useState(false);
 
   const validateForm = () => {
@@ -54,7 +55,7 @@ export default function PaymentScreen({ route, navigation }) {
     setPaying(true);
     try {
       const paymentReference = generatePaymentReference();
-      const paidFine = await payFine(fineId, paymentReference);
+      const paidFine = await payFine(fineId, paymentReference, notifyPhone.trim() || null);
       navigation.navigate('Success', {
         referenceNumber: paidFine.referenceNumber || referenceNumber,
         amountPaid: paidFine.amount || amount,
@@ -134,6 +135,20 @@ export default function PaymentScreen({ route, navigation }) {
               </View>
             </View>
 
+            <View style={styles.formGroup}>
+              <Text style={styles.label}>Mobile Number for SMS Confirmation (Optional)</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="e.g. 0771234567"
+                placeholderTextColor={COLORS.textMuted}
+                keyboardType="phone-pad"
+                maxLength={15}
+                value={notifyPhone}
+                onChangeText={setNotifyPhone}
+              />
+              <Text style={styles.hint}>Enter your number to receive a payment confirmation SMS.</Text>
+            </View>
+
             <LoadingButton title="Pay Now" onPress={handlePayNow} loading={paying} />
           </View>
         </ScrollView>
@@ -209,6 +224,11 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: COLORS.textDark,
     backgroundColor: COLORS.white,
+  },
+  hint: {
+    fontSize: 11,
+    color: COLORS.textMuted,
+    marginTop: 4,
   },
   row: {
     flexDirection: 'row',

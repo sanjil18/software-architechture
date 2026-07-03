@@ -1,17 +1,34 @@
+import Constants from 'expo-constants';
+import { Platform } from 'react-native';
+
 /**
- * App-wide configuration constants.
+ * Derive the backend base URL automatically so it survives IP changes.
  *
- * IMPORTANT: Phones (real or emulated) cannot reach "localhost" — that
- * resolves to the phone itself, not your development machine. You must
- * use your computer's LAN IP address instead.
- *
- * To find your IP:
- *   Windows : ipconfig        (look for "IPv4 Address" under your Wi-Fi adapter)
- *   Mac/Linux: ifconfig | grep inet
+ * Strategy (in priority order):
+ *  1. Web browser (Expo Web / localhost:8081)  → always localhost
+ *  2. Native device/simulator in Expo Go       → same host as the Metro
+ *     bundler (Constants.expoConfig.hostUri), which equals your machine's
+ *     current LAN IP — no manual update needed when the IP changes
+ *  3. Hard-coded fallback if Metro host is unavailable
  *
  * Your phone and your computer must be on the SAME Wi-Fi network.
  */
-export const BASE_URL = 'http://10.247.174.23:5000/api';
+const getBaseUrl = () => {
+  if (Platform.OS === 'web') {
+    return 'http://localhost:5000/api';
+  }
+  // Expo Go exposes the Metro bundler host which equals your machine's LAN IP
+  const metroHost =
+    Constants.expoConfig?.hostUri?.split(':')[0] ||
+    Constants.manifest?.debuggerHost?.split(':')[0];
+  if (metroHost) {
+    return `http://${metroHost}:5000/api`;
+  }
+  // Fallback — update this if auto-detect ever fails
+  return 'http://10.247.174.23:5000/api';
+};
+
+export const BASE_URL = getBaseUrl();
 
 export const COLORS = {
   primary: '#003580',

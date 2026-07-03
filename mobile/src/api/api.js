@@ -32,10 +32,11 @@ export const lookupFine = async (referenceNumber, categoryId) => {
  * @param {string} paymentReference client-generated reference, e.g. "MOB-1719400000000"
  * @returns {Promise<Object>} the updated fine object returned by the server
  */
-export const payFine = async (fineId, paymentReference) => {
+export const payFine = async (fineId, paymentReference, notifyPhone) => {
   const response = await api.post(`/fines/${fineId}/pay`, {
-   paymentMethod: 'MOBILE',
+    paymentMethod: 'MOBILE',
     paymentReference,
+    ...(notifyPhone ? { notifyPhone } : {}),
   });
   return response.data.fine;
 };
