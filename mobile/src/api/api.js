@@ -34,7 +34,7 @@ export const lookupFine = async (referenceNumber, categoryId) => {
  */
 export const payFine = async (fineId, paymentReference) => {
   const response = await api.post(`/fines/${fineId}/pay`, {
-    paymentMethod: 'mobile',
+   paymentMethod: 'MOBILE',
     paymentReference,
   });
   return response.data.fine;

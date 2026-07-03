@@ -11,7 +11,7 @@
  *
  * Your phone and your computer must be on the SAME Wi-Fi network.
  */
-export const BASE_URL = 'http://192.168.8.171:5000/api';
+export const BASE_URL = 'http://10.247.174.23:5000/api';
 
 export const COLORS = {
   primary: '#003580',
