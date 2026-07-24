@@ -10,10 +10,7 @@ import lombok.Data;
 
 import java.time.Instant;
 
-/**
- * Public lookup response — deliberately excludes officer info,
- * equivalent of the field allowlist built in controllers/fineController.js#lookupFine.
- */
+
 @Data
 @Builder
 public class FineLookupResponse {

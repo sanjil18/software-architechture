@@ -81,11 +81,7 @@ public class NotifyLkSmsGatewayImpl implements SmsGateway {
         }
     }
 
-    /**
-     * notify.lk always returns HTTP 200.
-     * The actual outcome is in the JSON body: "status":1 means queued/sent,
-     * any other value means failure (wrong key, no balance, invalid number, etc.).
-     */
+
     private static boolean isApiSuccess(String body) {
         if (body == null || body.isBlank()) return false;
         // Accept both {"status":1,...} and {"status": 1,...} (with optional space)

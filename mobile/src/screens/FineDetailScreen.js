@@ -5,10 +5,7 @@ import FineCard from '../components/FineCard';
 import LoadingButton from '../components/LoadingButton';
 import { COLORS } from '../config/constants';
 
-/**
- * Shows full details of the looked-up fine and lets the driver
- * proceed to payment (unless it's already paid).
- */
+
 export default function FineDetailScreen({ route, navigation }) {
   const { fine } = route.params;
   const isPayable = fine.status !== 'PAID' && fine.status !== 'CANCELLED';

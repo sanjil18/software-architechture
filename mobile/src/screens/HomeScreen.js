@@ -15,10 +15,7 @@ import { getCategories, lookupFine } from '../api/api';
 import LoadingButton from '../components/LoadingButton';
 import { COLORS } from '../config/constants';
 
-/**
- * Landing screen: driver enters their fine reference number and category,
- * then looks the fine up against the backend.
- */
+
 export default function HomeScreen({ navigation }) {
   const [categories, setCategories] = useState([]);
   const [categoriesLoading, setCategoriesLoading] = useState(true);

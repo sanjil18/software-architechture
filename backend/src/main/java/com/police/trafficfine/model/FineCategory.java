@@ -28,7 +28,7 @@ public class FineCategory {
     @Id
     private String id;
 
-    /** e.g. "TF001", "TF002" — stored uppercase, unique. */
+
     @Indexed(unique = true)
     @NotBlank
     private String categoryId;

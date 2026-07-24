@@ -9,11 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * Adapts our User document to Spring Security's UserDetails.
- * Role is exposed as "ROLE_ADMIN" / "ROLE_OFFICER" for use with hasRole(),
- * equivalent of the `authorize('admin')` middleware in the original app.
- */
+
 @Getter
 public class UserPrincipal implements UserDetails {
 

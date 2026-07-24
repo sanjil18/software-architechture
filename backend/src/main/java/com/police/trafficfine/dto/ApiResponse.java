@@ -3,7 +3,7 @@ package com.police.trafficfine.dto;
 import lombok.Builder;
 import lombok.Data;
 
-/** Generic { success, message } envelope used across simple responses. */
+
 @Data
 @Builder
 public class ApiResponse {

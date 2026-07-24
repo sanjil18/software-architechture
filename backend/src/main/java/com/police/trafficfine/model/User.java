@@ -34,17 +34,14 @@ public class User {
     @NotBlank(message = "Email is required")
     private String email;
 
-    /**
-     * Stored as a BCrypt hash. Never serialized back to clients
-     * (see UserResponse DTO), equivalent of Mongoose's `select: false`.
-     */
+
     @NotBlank(message = "Password is required")
     private String password;
 
     @Builder.Default
     private Role role = Role.OFFICER;
 
-    /** Only officers have badge numbers (sparse/unique, like the original schema). */
+
     private String badgeNumber;
 
     @NotBlank(message = "Phone number is required")

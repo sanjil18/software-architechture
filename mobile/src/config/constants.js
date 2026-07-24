@@ -1,18 +1,7 @@
 import Constants from 'expo-constants';
 import { Platform } from 'react-native';
 
-/**
- * Derive the backend base URL automatically so it survives IP changes.
- *
- * Strategy (in priority order):
- *  1. Web browser (Expo Web / localhost:8081)  → always localhost
- *  2. Native device/simulator in Expo Go       → same host as the Metro
- *     bundler (Constants.expoConfig.hostUri), which equals your machine's
- *     current LAN IP — no manual update needed when the IP changes
- *  3. Hard-coded fallback if Metro host is unavailable
- *
- * Your phone and your computer must be on the SAME Wi-Fi network.
- */
+
 const getBaseUrl = () => {
   if (Platform.OS === 'web') {
     return 'http://localhost:5000/api';
@@ -24,7 +13,7 @@ const getBaseUrl = () => {
   if (metroHost) {
     return `http://${metroHost}:5000/api`;
   }
-  // Fallback — update this if auto-detect ever fails
+  
   return 'http://10.247.174.23:5000/api';
 };
 

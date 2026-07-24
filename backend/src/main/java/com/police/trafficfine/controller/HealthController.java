@@ -7,9 +7,7 @@ import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- * Equivalent of the GET /health route in the original server.js.
- */
+
 @RestController
 public class HealthController {
 

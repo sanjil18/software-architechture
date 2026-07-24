@@ -13,12 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Equivalent of routes/categoryRoutes.js:
- *   GET  /api/categories      -> public
- *   POST /api/categories      -> protect + authorize('admin')
- *   PUT  /api/categories/:id  -> protect + authorize('admin')
- */
+
 @RestController
 @RequestMapping("/api/categories")
 @RequiredArgsConstructor

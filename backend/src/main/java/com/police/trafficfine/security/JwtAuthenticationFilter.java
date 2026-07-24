@@ -19,11 +19,7 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- * Equivalent of backend/src/middleware/auth.js `protect`:
- * reads the Bearer token, verifies it, loads the user, and rejects
- * requests from missing/invalid tokens or deactivated accounts.
- */
+
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {

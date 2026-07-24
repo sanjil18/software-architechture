@@ -16,12 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- * Equivalent of routes/authRoutes.js:
- *   POST /api/auth/login     -> public
- *   POST /api/auth/register  -> protect + authorize('admin')  (enforced in SecurityConfig)
- *   GET  /api/auth/me        -> protect
- */
+
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor

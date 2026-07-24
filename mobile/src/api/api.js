@@ -14,9 +14,9 @@ export const getCategories = async () => {
 
 /**
  * Look up a single traffic fine by its reference number and category ID.
- * @param {string} referenceNumber e.g. "TF-2024-ABCD1234"
- * @param {string} categoryId e.g. "TF001"
- * @returns {Promise<Object>} the fine object
+ * @param {string} referenceNumber 
+ * @param {string} categoryId 
+ * @returns {Promise<Object>} 
  */
 export const lookupFine = async (referenceNumber, categoryId) => {
   const response = await api.get('/fines/lookup', {

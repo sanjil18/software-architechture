@@ -21,12 +21,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
-/**
- * Maps the access rules that were spread across
- * routes/authRoutes.js, routes/fineRoutes.js, routes/categoryRoutes.js
- * and middleware/auth.js (protect / authorize) into one place, which is
- * the idiomatic Spring Security way of doing it.
- */
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor

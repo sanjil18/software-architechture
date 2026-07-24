@@ -15,11 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-/**
- * Central place for turning exceptions into the same
- * { success: false, message: "..." } JSON shape that
- * backend/src/middleware/errorHandler.js produced.
- */
+
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {

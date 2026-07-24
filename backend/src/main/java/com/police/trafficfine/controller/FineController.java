@@ -15,16 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- * Equivalent of routes/fineRoutes.js:
- *   GET  /api/fines/lookup      -> public
- *   POST /api/fines/:id/pay     -> public
- *   POST /api/fines             -> protect + authorize('officer','admin')
- *   GET  /api/fines/my-fines    -> protect + authorize('officer')
- *   GET  /api/fines/analytics   -> protect + authorize('admin')
- *   GET  /api/fines             -> protect + authorize('admin')
- *   PUT  /api/fines/:id         -> protect + authorize('admin','officer')
- */
+
 @RestController
 @RequestMapping("/api/fines")
 @RequiredArgsConstructor

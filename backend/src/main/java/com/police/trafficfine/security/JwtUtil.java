@@ -11,10 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 
-/**
- * Equivalent of the jwt.sign / jwt.verify calls in
- * backend/src/controllers/authController.js and middleware/auth.js.
- */
+
 @Component
 public class JwtUtil {
 

@@ -16,15 +16,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * Simple in-memory per-IP rate limiter for /api/**, equivalent of the
- * express-rate-limit middleware in the original server.js
- * (windowMs: 15 minutes, max: 100 requests).
- *
- * For a multi-instance deployment, swap this for a shared store
- * (e.g. Redis/Bucket4j) — this in-memory version matches the original
- * single-instance behaviour.
- */
+
 @Component
 public class RateLimitFilter extends OncePerRequestFilter {
 

@@ -39,7 +39,7 @@ public class TrafficFine {
     @Id
     private String id;
 
-    /** e.g. "TF-2024-001234" */
+
     @Indexed(unique = true)
     @NotBlank
     private String referenceNumber;
@@ -48,7 +48,7 @@ public class TrafficFine {
     @NotNull
     private FineCategory category;
 
-    /** Denormalized copy of category.categoryId for quick lookup without a join. */
+
     @NotBlank
     private String categoryId;
 

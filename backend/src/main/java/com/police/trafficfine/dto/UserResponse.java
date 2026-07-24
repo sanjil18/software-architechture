@@ -5,7 +5,7 @@ import com.police.trafficfine.model.User;
 import lombok.Builder;
 import lombok.Data;
 
-/** Never includes the password hash — equivalent of `.select('-password')`. */
+
 @Data
 @Builder
 public class UserResponse {

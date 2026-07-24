@@ -4,7 +4,7 @@ import com.police.trafficfine.model.FineStatus;
 import com.police.trafficfine.model.VehicleType;
 import lombok.Data;
 
-/** All fields optional — only non-null fields get applied (matches the original's `allowed.forEach` patch logic). */
+
 @Data
 public class UpdateFineRequest {
     private String driverName;
